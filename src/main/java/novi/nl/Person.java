@@ -52,25 +52,41 @@ public class Person {
         this.children.add(child);
     }
 
-    public void addSiblings(Person sibling){
+    public void addSibling(Person sibling){
         this.siblings.add(sibling);
     }
 
     public List<Person> getGrandChildren(){
-        List<Person> grandchildren = new ArrayList<>();
-
-        for (Person child : children){
-            for (Person grandchild : child.getChildren()){
-                grandchildren.addAll(grandchild.getChildren());
-            }
+        List<Person> grandchildren = new ArrayList<Person>();
+        for (Person child : getChildren()){
+            grandchildren.addAll(child.getChildren());
         }
 
         return grandchildren;
-
     }
 
     public void addPet(Pet pet){
         pets.add(pet);
+    }
+
+    public List<Pet> getPetsOfGrandChildren(){
+        List<Pet> petsOfGrandChildren= new ArrayList<Pet>();
+       for (Person grandChild: getGrandChildren()){
+           petsOfGrandChildren.addAll(grandChild.getPets());
+       }
+        return petsOfGrandChildren;
+    }
+
+    public List<Person> getNieces(){
+        List<Person> nieces = new ArrayList<>();
+        for (Person sibling: getSiblings()){
+            for (Person child: sibling.getChildren()){
+                if (child.getSex() == "vrouw"){
+                    nieces.add(child);
+                }
+            }
+        }
+        return nieces;
     }
 
 
